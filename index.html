@@ -5,53 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jayvee — Computer Engineering Portfolio</title>
 
-<!--
-====================================================================
- HOW TO CUSTOMIZE THIS FILE — read this first
-====================================================================
- This whole portfolio is ONE file. No build tools, no install steps.
- Every editable spot is marked with a comment that starts with "EDIT:".
- Just search (Ctrl+F / Cmd+F) for "EDIT:" in your code editor and
- work down the list.
-
- Quick map:
-   - Colors & fonts .......... the :root block in <style>, near the top
-   - Your name / tagline ...... <section id="hero">
-   - About text ............... <section id="about">
-   - Work experience .......... <section id="experience">
-   - Projects .................. <section id="projects">
-   - Skills ..................... <section id="skills">
-   - Education ................. <section id="education">
-   - Contact links ............. <section id="contact">
-   - Add a photo ............... look for "EDIT: PHOTO" in the hero
-
- To add a whole new project card: copy one <article class="proj-card">
- block (start to end) and paste it below the last one, then edit the text.
-
- To add a whole new experience entry: copy one <div class="exp-item">
- block and do the same.
-====================================================================
--->
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-/* ================================================================
-   EDIT: COLORS & FONTS — change the palette / typefaces here
-   ================================================================ */
 :root{
-  --paper: #EDEFE7;       /* page background — pale sage "datasheet paper" */
-  --paper-dim: #E1E4D9;   /* panel background, slightly deeper */
-  --ink: #16211C;         /* main text — deep pine-black */
-  --ink-soft: #4B564D;    /* secondary text */
-  --copper: #A85A25;      /* primary accent — copper trace */
-  --copper-dim: #8A4A1E;  /* hover / darker accent */
-  --teal: #35544B;        /* secondary accent — solder-mask teal */
-  --grid: #C7CCBE;        /* hairlines / grid / borders */
-  --amber: #C7911F;       /* tertiary accent — used sparingly for tags */
-  --card-bg: #F6F7F1;     /* card / panel surface */
+  --paper: #EDEFE7;
+  --paper-dim: #E1E4D9;
+  --ink: #16211C;
+  --ink-soft: #4B564D;
+  --copper: #A85A25;
+  --copper-dim: #8A4A1E;
+  --teal: #35544B;
+  --grid: #C7CCBE;
+  --amber: #C7911F;
+  --card-bg: #F6F7F1;
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
@@ -75,11 +44,9 @@ body{
 a{ color:inherit; text-decoration:none; }
 .wrap{ max-width:980px; margin:0 auto; padding:0 24px; }
 
-/* ---------- reveal on scroll ---------- */
 .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
 .reveal.in{ opacity:1; transform:translateY(0); }
 
-/* ---------- nav ---------- */
 header{
   position:sticky; top:0; z-index:50;
   background:rgba(237,239,231,0.92);
@@ -97,8 +64,14 @@ nav{
 }
 .brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--copper); display:inline-block; }
 .navlinks{ display:flex; gap:26px; font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.05em; text-transform:uppercase; }
-.navlinks a{ color:var(--ink-soft); position:relative; padding:4px 0; }
+.navlinks a{ color:var(--ink-soft); position:relative; padding:4px 0; transition:color .2s ease; }
+.navlinks a::after{
+  content:''; position:absolute; left:0; bottom:-3px; width:0%; height:2px;
+  background:var(--copper); transition:width .25s ease;
+}
 .navlinks a:hover{ color:var(--copper); }
+.navlinks a:hover::after, .navlinks a.active::after{ width:100%; }
+.navlinks a.active{ color:var(--copper); }
 .navtoggle{ display:none; background:none; border:1px solid var(--ink); border-radius:4px; padding:6px 10px; font-family:var(--font-mono); cursor:pointer; }
 
 @media (max-width:720px){
@@ -112,8 +85,7 @@ nav{
   .navtoggle{ display:block; }
 }
 
-/* ---------- hero: framed like a PCB fab drawing ---------- */
-#hero{ padding:56px 0 40px; }
+#hero{ padding:56px 0 40px; scroll-margin-top:90px; }
 .frame{
   position:relative;
   border:1.5px solid var(--ink);
@@ -161,9 +133,6 @@ h1 .accent{ color:var(--copper); }
   background:transparent; display:flex; align-items:center; justify-content:center;
   position:relative; overflow:hidden;
 }
-/* EDIT: PHOTO — replace this div's content with:
-   <img src="your-photo.jpg" alt="Jayvee" style="width:100%;height:100%;object-fit:cover;">
-   (put your image file next to this HTML file, then update the filename) */
 
 .cta-row{ margin-top:26px; display:flex; gap:14px; flex-wrap:wrap; }
 .btn{
@@ -174,8 +143,7 @@ h1 .accent{ color:var(--copper); }
 .btn.solid{ background:var(--ink); color:var(--paper); }
 .btn:hover{ background:var(--copper); border-color:var(--copper); color:var(--paper); }
 
-/* ---------- section shell ---------- */
-section.block{ padding:64px 0; border-top:1px solid var(--grid); }
+section.block{ padding:64px 0; border-top:1px solid var(--grid); scroll-margin-top:90px; }
 .sec-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:34px; }
 .desig{
   font-family:var(--font-mono); font-size:0.85rem; color:var(--copper);
@@ -184,11 +152,9 @@ section.block{ padding:64px 0; border-top:1px solid var(--grid); }
 .sec-title{ font-family:var(--font-display); font-size:1.7rem; font-weight:600; }
 .sec-sub{ font-family:var(--font-mono); font-size:0.75rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; }
 
-/* ---------- about ---------- */
 .about-text{ max-width:64ch; font-size:1rem; color:var(--ink-soft); }
 .about-text strong{ color:var(--ink); }
 
-/* ---------- experience ---------- */
 .exp-item{
   border-left:2px solid var(--grid); padding:4px 0 26px 22px; position:relative;
 }
@@ -202,12 +168,13 @@ section.block{ padding:64px 0; border-top:1px solid var(--grid); }
 .exp-org{ font-family:var(--font-mono); font-size:0.82rem; color:var(--teal); margin-top:2px; }
 .exp-desc{ margin-top:8px; color:var(--ink-soft); font-size:0.95rem; max-width:60ch; }
 
-/* ---------- projects ---------- */
 .proj-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
 @media (max-width:720px){ .proj-grid{ grid-template-columns:1fr; } }
 .proj-card{
   background:var(--card-bg); border:1px solid var(--ink); display:flex; flex-direction:column;
+  transition:transform .25s ease, box-shadow .25s ease;
 }
+.proj-card:hover{ transform:translateY(-4px); box-shadow:0 10px 20px rgba(22,33,28,0.08); }
 .proj-bar{
   background:var(--ink); color:var(--paper); font-family:var(--font-mono); font-size:0.72rem;
   letter-spacing:0.06em; padding:8px 14px; display:flex; justify-content:space-between; text-transform:uppercase;
@@ -222,19 +189,17 @@ section.block{ padding:64px 0; border-top:1px solid var(--grid); }
 .tag-row{ margin-top:12px; display:flex; flex-wrap:wrap; gap:6px; }
 .tag{ font-family:var(--font-mono); font-size:0.68rem; padding:3px 8px; border:1px solid var(--grid); color:var(--ink-soft); }
 
-/* ---------- skills ---------- */
 .skill-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:18px; }
-.skill-card{ border:1px solid var(--grid); background:var(--card-bg); padding:16px 18px; }
+.skill-card{ border:1px solid var(--grid); background:var(--card-bg); padding:16px 18px; transition:border-color .2s ease, transform .2s ease; }
+.skill-card:hover{ border-color:var(--copper); transform:translateY(-2px); }
 .skill-cat{ font-family:var(--font-mono); font-size:0.72rem; color:var(--copper); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
 .skill-list{ font-size:0.9rem; color:var(--ink-soft); }
 
-/* ---------- education ---------- */
 .edu-card{ border:1px solid var(--ink); background:var(--card-bg); padding:22px 24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 .edu-school{ font-family:var(--font-display); font-weight:600; font-size:1.1rem; }
 .edu-detail{ font-family:var(--font-mono); font-size:0.8rem; color:var(--teal); margin-top:4px; }
 .edu-status{ font-family:var(--font-mono); font-size:0.75rem; color:var(--copper); align-self:center; border:1px solid var(--copper); padding:5px 12px; height:fit-content; }
 
-/* ---------- contact ---------- */
 .contact-grid{ display:flex; gap:16px; flex-wrap:wrap; }
 .contact-card{
   flex:1 1 200px; border:1px solid var(--ink); background:var(--card-bg); padding:20px;
@@ -251,7 +216,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
 
 <header>
   <nav>
-    <!-- EDIT: change "JAYVEE" to your full name if you'd like it spelled out -->
     <div class="brand"><span class="dot"></span>JAYVEE // PORTFOLIO</div>
     <button class="navtoggle" id="navToggle">MENU</button>
     <div class="navlinks" id="navLinks">
@@ -265,7 +229,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
   </nav>
 </header>
 
-<!-- ============================== HERO ============================== -->
 <section id="hero">
   <div class="wrap">
     <div class="frame">
@@ -274,10 +237,8 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
       <div class="hero-grid">
         <div class="hero-text">
           <div class="eyebrow">// Computer Engineering Student</div>
-          <!-- EDIT: your name and short title -->
           <h1>Jayvee S. <span class="accent">Cacho</span></h1>
           <p class="tagline">
-            <!-- EDIT: your one-line tagline -->
             4th-year BS Computer Engineering student at PUP Sta. Mesa, building embedded
             systems and applied ML — from AIoT sensor diagnostics to network infrastructure.
           </p>
@@ -295,7 +256,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
   </div>
 </section>
 
-<!-- ============================== ABOUT ============================== -->
 <section class="block" id="about">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -305,7 +265,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
         <div class="sec-sub">Profile</div>
       </div>
     </div>
-    <!-- EDIT: rewrite this paragraph in your own words -->
     <p class="about-text">
       I'm an incoming 4th-year <strong>BS Computer Engineering</strong> student at the
       <strong>Polytechnic University of the Philippines – Sta. Mesa</strong>. My work sits
@@ -318,7 +277,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
   </div>
 </section>
 
-<!-- ============================== EXPERIENCE ============================== -->
 <section class="block" id="experience">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -329,8 +287,7 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
       </div>
     </div>
 
-    <!-- EDIT: copy this whole .exp-item block to add another entry -->
-    <div class="exp-item">
+    <div class="exp-item reveal">
       <div class="exp-top">
         <div class="exp-role">IT Intern</div>
         <div class="exp-time">JUL 2026 — PRESENT</div>
@@ -339,7 +296,7 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
       <p class="exp-desc">On-site IT internship supporting firm operations and technical infrastructure at their GMA-Kamuning office.</p>
     </div>
 
-    <div class="exp-item">
+    <div class="exp-item reveal">
       <div class="exp-top">
         <div class="exp-role">OJT — Technical Support</div>
         <div class="exp-time">EARLIER</div>
@@ -350,7 +307,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
   </div>
 </section>
 
-<!-- ============================== PROJECTS ============================== -->
 <section class="block" id="projects">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -363,8 +319,7 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
 
     <div class="proj-grid">
 
-      <!-- EDIT: copy this whole .proj-card block to add another project -->
-      <article class="proj-card">
+      <article class="proj-card reveal">
         <div class="proj-bar"><span>PN-001</span><span>Machine Learning</span></div>
         <div class="proj-body">
           <div class="proj-title">Chest Radiograph Classification</div>
@@ -384,7 +339,7 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
         </div>
       </article>
 
-      <article class="proj-card">
+      <article class="proj-card reveal">
         <div class="proj-bar"><span>PN-002</span><span>Networking</span></div>
         <div class="proj-body">
           <div class="proj-title">Enterprise Network Simulation</div>
@@ -404,8 +359,7 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
         </div>
       </article>
 
-      <!-- EDIT: this is an empty slot — duplicate a card above and replace with your next project -->
-      <article class="proj-card" style="border-style:dashed; align-items:center; justify-content:center; display:flex;">
+      <article class="proj-card reveal" style="border-style:dashed; align-items:center; justify-content:center; display:flex;">
         <div class="proj-body" style="text-align:center; color:var(--ink-soft); font-family:var(--font-mono); font-size:0.85rem;">
           + ADD PROJECT<br><span style="font-size:0.7rem;">duplicate a card above</span>
         </div>
@@ -415,7 +369,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
   </div>
 </section>
 
-<!-- ============================== SKILLS ============================== -->
 <section class="block" id="skills">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -426,28 +379,27 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
       </div>
     </div>
     <div class="skill-grid">
-      <!-- EDIT: adjust any category or list -->
-      <div class="skill-card">
+      <div class="skill-card reveal">
         <div class="skill-cat">Embedded Systems</div>
         <div class="skill-list">Arduino, ESP32, sensor integration, TinyML deployment</div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card reveal">
         <div class="skill-cat">PCB Design</div>
         <div class="skill-list">KiCad (with SKiDL), EasyEDA, schematic capture, DRC & routing</div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card reveal">
         <div class="skill-cat">Machine Learning</div>
         <div class="skill-list">TensorFlow / Keras, CNN architectures, model fine-tuning</div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card reveal">
         <div class="skill-cat">Networking</div>
         <div class="skill-list">Cisco (CCNA), VLANs, DHCP/DNS/ACL, VLSM subnetting</div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card reveal">
         <div class="skill-cat">Control Systems</div>
         <div class="skill-list">Routh-Hurwitz stability, Signal Flow Graphs, Mason's Gain Rule</div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card reveal">
         <div class="skill-cat">Programming</div>
         <div class="skill-list">Python, C/C++, HTML, MATLAB basics</div>
       </div>
@@ -455,7 +407,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
   </div>
 </section>
 
-<!-- ============================== EDUCATION ============================== -->
 <section class="block" id="education">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -465,9 +416,8 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
         <div class="sec-sub">Academic Background</div>
       </div>
     </div>
-    <div class="edu-card">
+    <div class="edu-card reveal">
       <div>
-        <!-- EDIT: adjust dates / details as needed -->
         <div class="edu-school">Polytechnic University of the Philippines – Sta. Mesa</div>
         <div class="edu-detail">BS Computer Engineering</div>
       </div>
@@ -476,7 +426,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
   </div>
 </section>
 
-<!-- ============================== CONTACT ============================== -->
 <section class="block" id="contact">
   <div class="wrap reveal">
     <div class="sec-head">
@@ -487,16 +436,15 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
       </div>
     </div>
     <div class="contact-grid">
-      <!-- EDIT: replace each href and value with your real contact info -->
-      <a class="contact-card" href="mailto:jayve.cacho29@gmail.com">
+      <a class="contact-card reveal" href="mailto:jayve.cacho29@gmail.com">
         <span class="contact-label">Email</span>
         <span class="contact-value">jayve.cacho29@gmail.com</span>
       </a>
-      <a class="contact-card" href="https://linkedin.com/in/jayvee-cacho" target="_blank" rel="noopener">
+      <a class="contact-card reveal" href="https://linkedin.com/in/jayvee-cacho" target="_blank" rel="noopener">
         <span class="contact-label">LinkedIn</span>
         <span class="contact-value">https://linkedin.com/in/jayvee-cacho</span>
       </a>
-      <a class="contact-card" href="0912-327-8164" target="_blank" rel="noopener">
+      <a class="contact-card reveal" href="tel:+639123278164">
         <span class="contact-label">Mobile number</span>
         <span class="contact-value">0912-327-8164</span>
       </a>
@@ -505,7 +453,6 @@ footer{ padding:30px 0 50px; text-align:center; font-family:var(--font-mono); fo
 </section>
 
 <footer>
-  <!-- EDIT: leave as-is or personalize -->
   Built by Jayvee · Polytechnic University of the Philippines · 2026
 </footer>
 
@@ -516,14 +463,39 @@ const navLinks = document.getElementById('navLinks');
 navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
 
-// scroll reveal
+// scroll reveal, staggered within each parent group
 const revealEls = document.querySelectorAll('.reveal');
+const groupCounts = new Map();
+revealEls.forEach(el => {
+  const parent = el.parentElement;
+  const idx = groupCounts.get(parent) || 0;
+  el.style.transitionDelay = (idx * 0.08) + 's';
+  groupCounts.set(parent, idx + 1);
+});
 const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  entries.forEach(e => {
+    if (e.isIntersecting){
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
 }, { threshold: 0.12 });
 revealEls.forEach(el => io.observe(el));
 
-// EDIT: change these lines to customize the boot-log animation text
+// active nav link highlight while scrolling
+const sections = document.querySelectorAll('section[id]');
+const navAnchors = document.querySelectorAll('.navlinks a');
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      const id = entry.target.getAttribute('id');
+      navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }
+  });
+}, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+sections.forEach(sec => navObserver.observe(sec));
+
+// boot animation
 const bootLines = [
   "> booting portfolio.ino ...",
   "> initializing profile: JAYVEE ...",
