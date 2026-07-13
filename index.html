@@ -206,6 +206,10 @@ section.block{ padding:70px 0; border-top:1px solid var(--panel-border); scroll-
   box-shadow:0 0 10px rgba(74,255,176,0.4);
 }
 .sec-title{ font-family:var(--font-display); font-size:1.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.02em; }
+.type-reveal.typing::after{
+  content:'▌'; margin-left:3px; color:var(--green);
+  animation:blink 0.9s steps(1) infinite;
+}
 .sec-sub{ font-family:var(--font-mono); font-size:0.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.08em; }
 
 .about-text{ max-width:66ch; font-size:1.05rem; color:var(--text-dim); text-align:justify; }
@@ -345,7 +349,7 @@ footer{
     <div class="sec-head">
       <span class="desig">SYS.01</span>
       <div>
-        <div class="sec-title">About</div>
+        <div class="sec-title type-reveal">About</div>
         <div class="sec-sub">Profile</div>
       </div>
     </div>
@@ -366,7 +370,7 @@ footer{
     <div class="sec-head">
       <span class="desig">SYS.02</span>
       <div>
-        <div class="sec-title">Experience</div>
+        <div class="sec-title type-reveal">Experience</div>
         <div class="sec-sub">Work History</div>
       </div>
     </div>
@@ -396,7 +400,7 @@ footer{
     <div class="sec-head">
       <span class="desig">SYS.03</span>
       <div>
-        <div class="sec-title">Projects</div>
+        <div class="sec-title type-reveal">Projects</div>
         <div class="sec-sub">Selected Work</div>
       </div>
     </div>
@@ -458,7 +462,7 @@ footer{
     <div class="sec-head">
       <span class="desig">SYS.04</span>
       <div>
-        <div class="sec-title">Skills</div>
+        <div class="sec-title type-reveal">Skills</div>
         <div class="sec-sub">Technical Stack</div>
       </div>
     </div>
@@ -496,7 +500,7 @@ footer{
     <div class="sec-head">
       <span class="desig">SYS.05</span>
       <div>
-        <div class="sec-title">Education</div>
+        <div class="sec-title type-reveal">Education</div>
         <div class="sec-sub">Academic Background</div>
       </div>
     </div>
@@ -515,7 +519,7 @@ footer{
     <div class="sec-head">
       <span class="desig">SYS.06</span>
       <div>
-        <div class="sec-title">Contact</div>
+        <div class="sec-title type-reveal">Contact</div>
         <div class="sec-sub">Comm Channels</div>
       </div>
     </div>
@@ -590,6 +594,42 @@ const navObserver = new IntersectionObserver((entries) => {
   });
 }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
 sections.forEach(sec => navObserver.observe(sec));
+
+// typewriter effect on section titles as they scroll into view
+const typeEls = document.querySelectorAll('.type-reveal');
+typeEls.forEach(el => { el.dataset.text = el.textContent.trim(); el.textContent = ''; });
+
+function typeText(el){
+  const text = el.dataset.text;
+  const gen = (parseInt(el.dataset.gen || '0', 10) + 1);
+  el.dataset.gen = gen;
+  el.classList.add('typing');
+  let i = 0;
+  function step(){
+    if (parseInt(el.dataset.gen, 10) !== gen) return;
+    el.textContent = text.slice(0, i);
+    if (i <= text.length){
+      i++;
+      setTimeout(step, 32);
+    } else {
+      el.classList.remove('typing');
+    }
+  }
+  step();
+}
+
+const typeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting){
+      typeText(e.target);
+    } else {
+      e.target.dataset.gen = (parseInt(e.target.dataset.gen || '0', 10) + 1);
+      e.target.classList.remove('typing');
+      e.target.textContent = '';
+    }
+  });
+}, { threshold: 0.4 });
+typeEls.forEach(el => typeObserver.observe(el));
 
 // boot animation
 const bootLines = [
